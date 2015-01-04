@@ -1,0 +1,23 @@
+{
+  "smtp.host"           : "host",
+  "smtp.port"           : "25",
+  "smtp.username"       : "username",
+  "smtp.password"       : "password",
+  "smtp.encryption"     : null,
+  "smtp.auth_mode"      : null,
+  "data.recipient"      : "user@domain.com",
+  "data.title"          : "New message from contact form",
+  "data.sender"         : "",
+  "data.name"           : "",
+  "data.message"        : "",
+  "data.cc"             : false,
+  "label.recipient"     : "Recipient",
+  "label.title"         : "Title",
+  "label.sender"        : "Sender",
+  "label.name"          : "Name",
+  "label.message"       : "Message",
+  "message.success"     : "Thank you for your feedback!",
+  "message.error"       : "Please check errors below each field.",
+  "validation.required" : "{field} should not be blank.",
+  "validation.email"    : "{field} is not a valid email address."
+}
