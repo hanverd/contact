@@ -40,13 +40,13 @@ $app->get('/', function () use ($app) {
 
   $validator = new Validator($data);
   $validator
-    ->labels(array(
+    ->labels([
       'recipient' => $app->config('label.recipient'),
       'title'     => $app->config('label.title'),
       'sender'    => $app->config('label.sender'),
       'name'      => $app->config('label.name'),
       'message'   => $app->config('label.message'),
-    ))
+    ])
     ->rule('required', ['sender', 'recipient', 'name', 'title', 'message'])
     ->message($app->config('validation.required'))
     ->rule('email', ['recipient', 'sender'])
