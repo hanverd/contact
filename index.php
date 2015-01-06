@@ -29,13 +29,16 @@ $app->get('/', function () use ($app) {
   $errors = [];
   $status = 201;
 
-  $validator = new Validator([
+  $data = [
     'recipient' => $request->get('recipient') ?: $app->config('data.recipient'),
     'title'     => $request->get('title')     ?: $app->config('data.title'),
     'sender'    => $request->get('sender')    ?: $app->config('data.sender'),
     'name'      => $request->get('name')      ?: $app->config('data.name'),
     'message'   => $request->get('message')   ?: $app->config('data.message'),
-  ]);
+    'cc'        => $request->get('cc')        ?: $app->config('data.cc'),
+  ];
+
+  $validator = new Validator($data);
   $validator
     ->labels(array(
       'recipient' => $app->config('label.recipient'),
@@ -51,7 +54,21 @@ $app->get('/', function () use ($app) {
 
   if ($validator->validate()) {
     $message = $app->config('message.success');
-  } else {
+
+    $mailer = Swift_Mailer::newInstance(Swift_MailTransport::newInstance());
+    $email = Swift_Message::newInstance()
+      ->setSubject($data['title'])
+      ->setFrom([$data['sender'] => $data['name']])
+      ->setTo([$data['recipient']])
+      ->setBody($data['message']);
+
+    if ($data['cc']) {
+      $email->setCc([$data['sender'] => $data['name']]);
+    }
+
+    $mailer->send($email);
+  }
+  else {
     $message = $app->config('message.error');
     $errors = array_map(
       function ($errors) {
