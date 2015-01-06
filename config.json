@@ -1,10 +1,4 @@
 {
-  "smtp.host"           : "host",
-  "smtp.port"           : "25",
-  "smtp.username"       : "username",
-  "smtp.password"       : "password",
-  "smtp.encryption"     : null,
-  "smtp.auth_mode"      : null,
   "data.recipient"      : "user@domain.com",
   "data.title"          : "New message from contact form",
   "data.sender"         : "",
