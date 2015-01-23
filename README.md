@@ -55,27 +55,16 @@ Below is example JavaScript code showing how API can be used.
 ```javascript
 $('.contact-form').on('submit', function(event) {
   var $form = $(this);
-  var $fields = {
-    sender: $('[name="sender"]', $form),
-    name: $('[name="name"]', $form),
-    message: $('[name="message"]', $form)
-  };
 
   $.ajax({
     url: $form.attr('action'),
-    data: {
-      sender: $fields.sender.val(),
-      name: $fields.name.val(),
-      message: $fields.message.val()
-    }
+    data: form.serialize()
   })
   .always(function() {
     $('.success, .error', $form).remove();
   })
   .done(function(data) {
-    $fields.sender.val('');
-    $fields.name.val('');
-    $fields.message.val('');
+    $form.get().reset();
 
     $('<div>')
       .addClass('success')
