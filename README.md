@@ -58,7 +58,7 @@ $('.contact-form').on('submit', function(event) {
 
   $.ajax({
     url: $form.attr('action'),
-    data: form.serialize()
+    data: $form.serialize()
   })
   .always(function() {
     $('.success, .error', $form).remove();
@@ -75,7 +75,7 @@ $('.contact-form').on('submit', function(event) {
     var data = xhr.responseJSON;
 
     $.each(data.errors, function(field, error) {
-      $fields[field].after($('<p>').addClass('error').text(error));
+      $('[name="' + field + '"]', $form).after($('<p>').addClass('error').text(error));
     });
   });
 
