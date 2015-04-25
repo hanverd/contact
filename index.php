@@ -26,27 +26,17 @@ $app->get('/', function () use ($app) {
   $response = $app->response;
 
   $message = '';
-  $errors = [];
+  $errors = $data = $labels = [];
   $status = 201;
 
-  $data = [
-    'recipient' => $request->get('recipient') ?: $app->config('data.recipient'),
-    'title'     => $request->get('title')     ?: $app->config('data.title'),
-    'sender'    => $request->get('sender')    ?: $app->config('data.sender'),
-    'name'      => $request->get('name')      ?: $app->config('data.name'),
-    'message'   => $request->get('message')   ?: $app->config('data.message'),
-    'cc'        => $request->get('cc')        ?: $app->config('data.cc'),
-  ];
+  foreach(['recipient', 'title', 'sender', 'name', 'message', 'cc'] as $key) {
+    $data[$key] = $request->get($key) ?: $app->config('data.'.$key);
+    $labels[$key] = $app->config('label.'.$key);
+  }
 
   $validator = new Validator($data);
   $validator
-    ->labels([
-      'recipient' => $app->config('label.recipient'),
-      'title'     => $app->config('label.title'),
-      'sender'    => $app->config('label.sender'),
-      'name'      => $app->config('label.name'),
-      'message'   => $app->config('label.message'),
-    ])
+    ->labels($labels)
     ->rule('required', ['sender', 'recipient', 'name', 'title', 'message'])
     ->message($app->config('validation.required'))
     ->rule('email', ['recipient', 'sender'])
@@ -78,7 +68,7 @@ $app->get('/', function () use ($app) {
   $response->setStatus($status);
   $response->setBody(json_encode([
     'message' => $message,
-    'errors'  => $errors
+    'errors' => $errors
   ]));
 });
 
