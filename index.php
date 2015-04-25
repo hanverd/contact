@@ -70,12 +70,7 @@ $app->get('/', function () use ($app) {
   }
   else {
     $message = $app->config('message.error');
-    $errors = array_map(
-      function ($errors) {
-        return reset($errors);
-      },
-      $validator->errors()
-    );
+    $errors = array_map('reset', $validator->errors());
     $status = 400;
   }
 
