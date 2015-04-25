@@ -29,7 +29,7 @@ $app->get('/', function () use ($app) {
   $errors = $data = $labels = [];
   $status = 201;
 
-  foreach(['recipient', 'title', 'sender', 'name', 'message', 'cc'] as $key) {
+  foreach (['recipient', 'title', 'sender', 'name', 'message', 'cc'] as $key) {
     $data[$key] = $request->get($key) ?: $app->config('data.'.$key);
     $labels[$key] = $app->config('label.'.$key);
   }
